@@ -1,35 +1,27 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 
-<div class="container">
-  <div class="card center spacer">
-    <h1 class="title text-center">Login With</h1>
-    <form method="post" action="" class="login-form spacer">
-      {% csrf_token %}
-      <div class="input-group">
-        <img
-          class="icon input-icon"
-          src="{% static 'icons/envelope.png' %}"
-          alt=""
-        />
-        {{ form.username }}
-      </div>
-      <div class="input-group">
-        <img
-          class="icon input-icon"
-          src="{% static 'icons/key.svg' %}"
-          alt=""
-        />
-        {{ form.password }}
-      </div>
-      <input type="submit" class="submit" value="Login" />
-    </form>
+<div class="login container">
 
-    <div class="redirect">
-      Don't have an account?&nbsp;<a href="{% url 'signup' %}" class="link"
-        >Signup</a
-      >
+  <div class="card center spacer">
+    <div class="logo"><a href="/" class="logo">HEALTH<span>ck</span></a></>
+      <h1 class="title text-center">Login With</h1>
+      <form method="post" action="" class="login-form spacer">
+        {% csrf_token %}
+        <div class="input-group">
+          <img class="icon input-icon" src="{% static 'icons/envelope.png' %}" alt="" />
+          {{ form.username }}
+        </div>
+        <div class="input-group">
+          <img class="icon input-icon" src="{% static 'icons/key.svg' %}" alt="" />
+          {{ form.password }}
+        </div>
+        <input type="submit" class="submit" value="Login" />
+      </form>
+
+      <div class="redirect">
+        Don't have an account?&nbsp;<a href="{% url 'signup' %}" class="link">Signup</a>
+      </div>
     </div>
   </div>
-</div>
 
-{% endblock %}
+  {% endblock %}

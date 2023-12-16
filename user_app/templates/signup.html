@@ -1,63 +1,42 @@
 <!-- book_appointment.html -->
 
 {% extends 'base.html' %} {% block content %} {% load static %}
-<div class="container">
+<div class="signup container">
   <div class="card center spacer">
-    <h1 class="title text-center">Register and Track Health</h1>
-    <form method="post" class="login-form spacer" id="signup-form">
-      {% csrf_token %}
-      <div class="input-group">
-        <img
-          class="icon input-icon"
-          src="{% static 'icons/profile-user.svg' %}"
-          alt=""
-        />
+    <div class="logo"><a href="/" class="logo">HEALTH<span>ck</span></a></>
+      <h1 class="title text-center">Register and Track Health</h1>
+      <form method="post" class="login-form spacer" id="signup-form">
+        {% csrf_token %}
+        <div class="input-group">
+          <img class="icon input-icon" src="{% static 'icons/profile-user.svg' %}" alt="" />
 
-        {{ form.first_name }}
-      </div>
-      <div class="input-group">
-        <img
-          class="icon input-icon"
-          src="{% static 'icons/profile-user.svg' %}"
-          alt=""
-        />
+          {{ form.first_name }}
+        </div>
+        <div class="input-group">
+          <img class="icon input-icon" src="{% static 'icons/profile-user.svg' %}" alt="" />
 
-        {{ form.last_name }}
+          {{ form.last_name }}
+        </div>
+        <div class="input-group">
+          <img class="icon input-icon" src="{% static 'icons/envelope.png' %}" alt="" />
+          {{ form.username }}
+        </div>
+        <div class="drop-container">{{ form.user_type }} <span></span></div>
+        <div class="input-group">
+          <img class="icon input-icon" src="{% static 'icons/key.svg' %}" alt="" />
+          {{ form.password1 }}
+        </div>
+        <div class="input-group">
+          <img class="icon input-icon" src="{% static 'icons/key.svg' %}" alt="" />
+          {{ form.password2 }}
+        </div>
+        <input type="submit" class="submit" value="Signup" />
+      </form>
+      <div class="redirect">
+        Already have an account?&nbsp;<a href="{% url 'login' %}" class="link">Login</a>
+        <br />
       </div>
-      <div class="input-group">
-        <img
-          class="icon input-icon"
-          src="{% static 'icons/envelope.png' %}"
-          alt=""
-        />
-        {{ form.username }}
-      </div>
-      <div class="drop-container">{{ form.user_type }} <span></span></div>
-      <div class="input-group">
-        <img
-          class="icon input-icon"
-          src="{% static 'icons/key.svg' %}"
-          alt=""
-        />
-        {{ form.password1 }}
-      </div>
-      <div class="input-group">
-        <img
-          class="icon input-icon"
-          src="{% static 'icons/key.svg' %}"
-          alt=""
-        />
-        {{ form.password2 }}
-      </div>
-      <input type="submit" class="submit" value="Signup" />
-    </form>
-    <div class="redirect">
-      Already have an account?&nbsp;<a href="{% url 'login' %}" class="link"
-        >Login</a
-      >
-      <br />
     </div>
   </div>
-</div>
 
-{% endblock %}
+  {% endblock %}

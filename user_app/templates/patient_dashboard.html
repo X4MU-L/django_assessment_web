@@ -6,7 +6,7 @@
 <!-- Display Medical Records -->
 <h2>Your Medical Records</h2>
 {% for record in medical_records %}
-<p>{{ record.details }}</p>
+<p>{{ record.patient.userprofile.first_name }}</p>
 {% endfor %}
 
 <!-- Display Appointments -->

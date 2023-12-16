@@ -1,43 +1,73 @@
 <!-- base.html -->
-
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
+
 <html>
-  <head>
-    <title>Your App Name</title>
-    <link rel="stylesheet" href="{% static 'styles/styles.css' %}" />
-    <script src="{% static 'js/script.js' %}" defer></script>
-  </head>
-  <body>
-    <!-- Add your navigation bar or other common elements here -->
 
-    <!--messages-->
+<head>
+  <title>Your App Name</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'styles/styles.css' %}" />
+  <script src="{% static 'js/script.js' %}" defer></script>
+</head>
 
-    <div class="messages-container">
-      {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-          {{ message }}
-        </li>
-        {% endfor %}
-      </ul>
+<body>
+  <!-- Add your navigation bar or other common elements here -->
+  {% with user=request.user.userprofile %}
+  {% with is_auth=request.user.is_authenticated %}
+  <nav>
+    <ul class="menu">
+      <li class="logo-nav"><a href="/">HEALTH<span>ck</span></a></li>
+      <li class="item"><a href="{% url 'create_medical_record' %}">Create Records</a></li>
+      <li class="item">
+        <a href="{% url 'book_appointment' %}">
+          {% if user.user_type == 'P' and is_auth %}
+          Create Appointment
+          {% else %}
+          View Appointments
+          {% endif %}</a>
+      </li>
+      <li class="item"><a href="#"></a></li>
+      {% if not is_auth %}
+      <li class="item button"><a href="{% url 'login' %}">Log In</a></li>
+      <li class="item button secondary">
+        <a href="{% url 'signup' %}">Sign Up</a>
+      </li>
+      {% else %}
+      <li class="item button"><a href="#">Log out</a></li>
       {% endif %}
-      <!-- <img
-        class="message-icon"
-        src="{% static 'icons/sign.svg' %}"
-        alt="error"
-      />
-      <div class="message">
-        <h3 class="message-title title">Error</h3>
-        <p class="message-paragraph">Something went wrong!</p>
-      </div>
-      <span class="message-close error">x</span> -->
-    </div>
-    <!--end messages-->
+      <li class="toggle"><span class="bars"></span></li>
+    </ul>
+  </nav>
+  <!--messages-->
 
-    {% block content %}
-    <!-- Content goes here -->
-    {% endblock %}
-  </body>
+  <div class="messages-container">
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <!-- <img
+              class="message-icon"
+              src="{% static 'icons/sign.svg' %}"
+              alt="error"
+            />
+            <div class="message">
+              <h3 class="message-title title">Error</h3>
+              <p class="message-paragraph">Something went wrong!</p>
+            </div>
+            <span class="message-close error">x</span> -->
+  </div>
+  {% endwith %}
+  {% endwith %}
+  <!--end messages-->
+  {% block content %}
+  <!-- Content goes here -->
+  {% endblock %}
+</body>
+
 </html>

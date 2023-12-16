@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-
+from functools import wraps
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -10,7 +10,19 @@ from .models import UserProfile, MedicalRecord, Appointment
 from . import forms
 
 
+def homePage(request):
+    return render(request, "home.html")
+def redirect_authenticated_user(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.is_authenticated:
+            next_url = request.GET.get('next', '/')
+            return redirect(next_url)
+        else:
+            return view_func(request, *args, **kwargs)
+    return _wrapped_view
 
+# @redirect_authenticated_user
 def loginPage(request):
     """Login user into application"""
     if request.method == "POST":
@@ -51,7 +63,7 @@ def loginPage(request):
     form = forms.LoginForm()
     return render(request, "login.html", {"form" : form })
 
-
+@redirect_authenticated_user
 def signup(request):
     """Create a user account"""
     if request.method == "POST":
@@ -90,7 +102,9 @@ def patient_dashboard(request):
     # get patient
     patient = request.user.userprofile
     if patient.user_type == "P":
-        medical_records = MedicalRecord.objects.filter(patient=patient)
+        medical_records = MedicalRecord.objects.all()
+        for m in medical_records:
+            print(m.__dict__)
         appointments = Appointment.objects.filter(patient=patient)
         return render(request, 'patient_dashboard.html', {'medical_records': medical_records, 'appointments': appointments})
     # if not patient redirect to health worker dashboard
@@ -115,7 +129,7 @@ def create_medical_record(request):
         form = forms.MedicalRecordForm(request.POST)
         if form.is_valid():
             medical_record = form.save(commit=False)
-            medical_record.patient = request.user
+            medical_record.patient = request.user.userprofile
             medical_record.save()
             return redirect('patient_dashboard')
     else:
@@ -135,3 +149,5 @@ def book_appointment(request):
     else:
         form = forms.AppointmentForm()
     return render(request, 'book_appointment.html', {'form': form})
+
+
