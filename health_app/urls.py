@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # debug tool bar
     path("__debug__/", include("debug_toolbar.urls")),
+    path("", include("user_app.urls"))
 ]

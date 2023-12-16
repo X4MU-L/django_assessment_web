@@ -1,0 +1,21 @@
+<!-- patient_dashboard.html -->
+
+{% extends 'base.html' %} {% block content %}
+<h1>Patient Dashboard</h1>
+
+<!-- Display Medical Records -->
+<h2>Your Medical Records</h2>
+{% for record in medical_records %}
+<p>{{ record.details }}</p>
+{% endfor %}
+
+<!-- Display Appointments -->
+<h2>Your Appointments</h2>
+{% for appointment in appointments %}
+<p>{{ appointment.date_time }}</p>
+{% endfor %}
+
+<!-- Add links to create medical records and book appointments -->
+<a href="{% url 'create_medical_record' %}">Create Medical Record</a><br />
+<a href="{% url 'book_appointment' %}">Book Appointment</a>
+{% endblock %}

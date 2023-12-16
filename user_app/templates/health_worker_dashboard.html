@@ -1,0 +1,16 @@
+<!-- health_worker_dashboard.html -->
+
+{% extends 'base.html' %} {% block content %}
+<h1>Health Worker Dashboard</h1>
+
+<!-- Display Appointments -->
+<h2>Your Appointments</h2>
+{% for appointment in appointments %}
+<p>{{ appointment.date_time }}</p>
+{% endfor %}
+
+<!-- Display Rejected Appointments -->
+<h2>Rejected Appointments</h2>
+{% for appointment in rejected_appointments %}
+<p>{{ appointment.date_time }}</p>
+{% endfor %} {% endblock %}
